@@ -1,5 +1,6 @@
 Api rest tests
 ======================
+[![Build Status](https://travis-ci.org/wlmFincatti/api-rest-tests.svg?branch=master)](https://travis-ci.org/github/wlmFincatti/api-rest-tests) 
 
 Estrutura de projeto JAVA abrangendo implementação do clean architecture e pirâmide de testes.
 
