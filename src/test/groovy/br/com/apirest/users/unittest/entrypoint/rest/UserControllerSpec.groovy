@@ -47,7 +47,7 @@ class UserControllerSpec extends Specification {
         then:
         1 * findUser.execute(_) >> userMock
         with(userResponse) {
-            statusCodeValue == HttpStatus.OK.value()
+            getStatusCode() == HttpStatus.OK
             body.name == userMock.name
             body.age == userMock.age
         }
@@ -59,7 +59,7 @@ class UserControllerSpec extends Specification {
 
         then:
         1 * deleteUser.execute(_)
-        response.statusCodeValue == HttpStatus.NO_CONTENT.value()
+        response.getStatusCode() == HttpStatus.NO_CONTENT
     }
 
     def "should call method execute of editUser once time"() {
@@ -76,7 +76,7 @@ class UserControllerSpec extends Specification {
                 assert u.age == 31
                 assert u.id == 1
         }
-        response.statusCodeValue == HttpStatus.NO_CONTENT.value()
+        response.getStatusCode() == HttpStatus.NO_CONTENT
     }
 
     def "should call method execute of listUsers once time and retun a list of users"() {
@@ -90,7 +90,7 @@ class UserControllerSpec extends Specification {
         1 * listUsers.execute() >> listUsersMock
         and:
         verifyAll(response) {
-            statusCodeValue == HttpStatus.OK.value()
+            getStatusCode() == HttpStatus.OK
             body.size() == 2
             body.eachWithIndex { userDto, idx ->
                 with(userDto) {
@@ -112,7 +112,7 @@ class UserControllerSpec extends Specification {
         1 * createUser.execute(_) >> userMock
         and:
         verifyAll(responseUser) {
-            statusCodeValue == HttpStatus.CREATED.value()
+            getStatusCode() == HttpStatus.CREATED
             body.name == "William"
             body.age == 31
             headers.getLocation().toString() == "/api/v1/users/1"

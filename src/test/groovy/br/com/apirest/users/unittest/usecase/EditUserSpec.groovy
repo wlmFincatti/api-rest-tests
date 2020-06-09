@@ -33,7 +33,7 @@ class EditUserSpec extends Specification {
 
         then:
         1 * userRepository.existsById(id) >> true
-        1 * userRepository.editProduct(_, _, _)
+        1 * userRepository.editUser(_, _, _)
     }
 
     def "should not user repository edit once time and throw expection"() {

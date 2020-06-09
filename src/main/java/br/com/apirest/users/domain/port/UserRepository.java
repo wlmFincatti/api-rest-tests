@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
     @Query(value = "UPDATE user SET name = :name, age = :age WHERE id = :id", nativeQuery = true)
-    void editProduct(Integer id, String name, Integer age);
+    void editUser(Integer id, String name, Integer age);
 
 }

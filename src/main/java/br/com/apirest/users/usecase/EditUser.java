@@ -21,6 +21,6 @@ public class EditUser {
         if (!userRepository.existsById(user.getId())) {
             throw new UserNotFoundException("User not found to update with id " + user.getId().toString());
         }
-        userRepository.editProduct(user.getId(), user.getName(), user.getAge());
+        userRepository.editUser(user.getId(), user.getName(), user.getAge());
     }
 }
