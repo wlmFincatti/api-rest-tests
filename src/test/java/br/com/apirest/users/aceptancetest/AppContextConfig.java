@@ -1,4 +1,4 @@
-package br.com.apirest.users.aceptancetest.stepDefinitions;
+package br.com.apirest.users.aceptancetest;
 
 import br.com.apirest.users.UsersApplication;
 import org.springframework.boot.test.context.SpringBootContextLoader;
@@ -11,4 +11,5 @@ import org.springframework.test.context.ContextConfiguration;
         loader = SpringBootContextLoader.class
 )
 public class AppContextConfig {
+
 }
