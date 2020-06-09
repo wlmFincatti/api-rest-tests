@@ -6,10 +6,10 @@ Estrutura de projeto JAVA abrangendo implementação do clean architecture e pir
 ## Referência
 
 <p align="center">
-  <img src="https://github.com/wlmFincatti/api-rest-tests/blob/master/pyramid-test.png?raw=true" width="400 "align="center" />
+  <img src="https://github.com/wlmFincatti/api-rest-tests/blob/master/pyramid-tests.png" width="400 "align="center" />
 </p>
 
-O projeto JAVA Clean têm como objetivo demonstrar como é simples trabalhar com toggles, clean architecture (não o by the book) e testes possibilitando o trunk based development.
+O projeto tem como objetivo demonstrar testes unitários com dois frameworks diferentes para testes unitários, no caso Spock baseado em Groovy e o Junit, também foi abordado teste de componente ou aceitação usando o Cucumber e rest Assured para validação de Apis.
 
 A pirâmide de testes implementada nesse projeto têm como referência o documento [Microservice Testing](https://martinfowler.com/articles/microservice-testing/) com algumas adaptações. Basicamente a implementação têm o seguinte princípio:
 
