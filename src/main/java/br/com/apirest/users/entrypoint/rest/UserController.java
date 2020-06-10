@@ -1,8 +1,6 @@
 package br.com.apirest.users.entrypoint.rest;
 
 import br.com.apirest.users.domain.entity.User;
-import br.com.apirest.users.entrypoint.converter.UserConverter;
-import br.com.apirest.users.entrypoint.dto.UserDto;
 import br.com.apirest.users.usecase.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/api/v1/users")
 public class UserController {
 
@@ -33,20 +32,20 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> findUserById(@PathVariable Integer id) {
-        return ResponseEntity.ok(UserConverter.convertDto(findUser.execute(id)));
+    public ResponseEntity<User> findUserById(@PathVariable Integer id) {
+        return ResponseEntity.ok(findUser.execute(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> listUsers() {
-        return ResponseEntity.ok(UserConverter.convertDtos(listUsers.execute()));
+    public ResponseEntity<List<User>> listUsers() {
+        return ResponseEntity.ok(listUsers.execute());
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody User user) {
-        UserDto userDto = UserConverter.convertDto(createUser.execute(user));
-        URI uri = UriComponentsBuilder.fromPath("/api/v1/users/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(userDto);
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+        User userCreated = createUser.execute(user);
+        URI uri = UriComponentsBuilder.fromPath("/api/v1/users/{id}").buildAndExpand(userCreated.getId()).toUri();
+        return ResponseEntity.created(uri).body(userCreated);
     }
 
     @DeleteMapping("/{id}")

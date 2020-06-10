@@ -1,7 +1,6 @@
 package br.com.apirest.users.unittest.entrypoint.rest;
 
 import br.com.apirest.users.domain.entity.User;
-import br.com.apirest.users.entrypoint.dto.UserDto;
 import br.com.apirest.users.entrypoint.rest.UserController;
 import br.com.apirest.users.usecase.*;
 import org.junit.jupiter.api.AfterEach;
@@ -28,6 +27,7 @@ class UserControllerTest {
     private DeleteUser deleteUser;
     private EditUser editUser;
     private UserController userController;
+    private User userMock;
 
     @BeforeEach
     void setUp() {
@@ -37,6 +37,7 @@ class UserControllerTest {
         deleteUser = mock(DeleteUser.class);
         editUser = mock(EditUser.class);
         userController = new UserController(findUser, createUser, listUsers, deleteUser, editUser);
+        userMock = new User(1, 31, "William");
     }
 
     @AfterEach
@@ -52,24 +53,24 @@ class UserControllerTest {
     @Test
     @DisplayName("should call method execute of findUser once time and return user")
     void findUserById() {
-        UserDto userMock = new UserDto("william", 31);
         when(findUser.execute(Mockito.anyInt())).thenReturn(new User(1, userMock.getAge(), userMock.getName()));
 
-        ResponseEntity<UserDto> responseEntityResult = userController.findUserById(1);
+        ResponseEntity<User> responseEntityResult = userController.findUserById(1);
 
         verify(findUser, times(1)).execute(1);
         assertEquals(HttpStatus.OK, responseEntityResult.getStatusCode());
         assertEquals(userMock.getAge(), responseEntityResult.getBody().getAge());
         assertEquals(userMock.getName(), responseEntityResult.getBody().getName());
+        assertEquals(userMock.getId(), responseEntityResult.getBody().getId());
     }
 
     @Test
     @DisplayName("should call method execute of deleteUser once time")
     void listUsers() {
-        List<User> listUserMock = Arrays.asList(new User(1, 31, "William"), new User(2, 23, "Ana"));
+        List<User> listUserMock = Arrays.asList(userMock, new User(2, 23, "Ana"));
         when(listUsers.execute()).thenReturn(listUserMock);
 
-        ResponseEntity<List<UserDto>> listResponseEntity = userController.listUsers();
+        ResponseEntity<List<User>> listResponseEntity = userController.listUsers();
 
         verify(listUsers, times(1)).execute();
         assertThat(listResponseEntity.getStatusCode(), is(HttpStatus.OK));
@@ -79,23 +80,24 @@ class UserControllerTest {
     @Test
     @DisplayName("should call method execute of createUser once time and retun a user")
     void createUserController() {
-        User userMock = new User(1, 31, "William");
         when(createUser.execute(userMock)).thenReturn(userMock);
 
-        ResponseEntity<UserDto> userResponse = userController.createUser(userMock);
+        ResponseEntity<User> responseEntityResult = userController.createUser(userMock);
 
         verify(createUser, times(1)).execute(userMock);
-        assertThat(userResponse.getStatusCode(), is(HttpStatus.CREATED));
-        assertTrue(userResponse.getBody().getName().equals(userMock.getName()));
-        assertTrue(userResponse.getBody().getAge().equals(userMock.getAge()));
+        assertThat(responseEntityResult.getStatusCode(), is(HttpStatus.CREATED));
+        assertTrue(responseEntityResult.hasBody());
+        assertEquals(userMock.getAge(), responseEntityResult.getBody().getAge());
+        assertEquals(userMock.getName(), responseEntityResult.getBody().getName());
+        assertEquals(userMock.getId(), responseEntityResult.getBody().getId());
     }
 
     @Test
     @DisplayName("should call method execute of deleteUser once time")
     void deleteUser() {
-        ResponseEntity response = userController.deleteUser(1);
+        ResponseEntity response = userController.deleteUser(userMock.getId());
 
-        verify(deleteUser, times(1)).execute(1);
+        verify(deleteUser, times(1)).execute(userMock.getId());
         assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
         assertFalse(response.hasBody());
     }
@@ -103,8 +105,6 @@ class UserControllerTest {
     @Test
     @DisplayName("should call method execute of editUser once time")
     void editUser() {
-        User userMock = new User(1, 31, "William");
-
         ResponseEntity response = userController.editUser(userMock);
 
         verify(editUser, times(1)).execute(userMock);

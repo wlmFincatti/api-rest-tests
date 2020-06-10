@@ -28,6 +28,7 @@ public class UserControllerIntegrationTest {
     private FindUser findUser;
     private CreateUser createUser;
     private UserController userController;
+    private User userMock;
 
     @BeforeEach
     public void setup() {
@@ -39,11 +40,11 @@ public class UserControllerIntegrationTest {
         userController = new UserController(findUser, createUser, listUsers, deleteUser, editUser);
         mockMvc = MockMvcBuilders.standaloneSetup(userController)
                 .setControllerAdvice(CustomExceptionHandler.class).build();
+        userMock = new User(1, 31, "William");
     }
 
     @Test
     public void shouldFindUserByIdController() throws Exception {
-        User userMock = new User(1, 31, "William");
         when(findUser.execute(1)).thenReturn(userMock);
 
         MvcResult mvcResult = mockMvc
@@ -52,6 +53,7 @@ public class UserControllerIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name", is("William")))
                 .andExpect(jsonPath("$.age", is(31)))
+                .andExpect(jsonPath("$.id", is(1)))
                 .andReturn();
 
         verify(findUser, times(1)).execute(userMock.getId());
@@ -59,7 +61,6 @@ public class UserControllerIntegrationTest {
 
     @Test
     public void shouldNotFoundUserByIdController() throws Exception {
-        User userMock = new User(1, 31, "William");
         when(findUser.execute(1)).thenThrow(UserNotFoundException.class);
 
         MvcResult mvcResult = mockMvc
