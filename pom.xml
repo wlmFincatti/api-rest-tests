@@ -24,7 +24,7 @@
         <codehaus.groovy.version>2.4.7</codehaus.groovy.version>
         <rest.assured.version>3.3.0</rest.assured.version>
         <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
-        <hibernate.validator.version>6.0.2.Final</hibernate.validator.version>
+        <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
         <javax.validation.version>2.0.0.Final</javax.validation.version>
     </properties>
 
