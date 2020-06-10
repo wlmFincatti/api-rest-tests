@@ -1,6 +1,8 @@
 package br.com.apirest.users.integrationtest.entrypoint.rest;
 
 import br.com.apirest.users.domain.entity.User;
+import br.com.apirest.users.domain.exceptions.UserNotFoundException;
+import br.com.apirest.users.entrypoint.CustomExceptionHandler;
 import br.com.apirest.users.entrypoint.rest.UserController;
 import br.com.apirest.users.usecase.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,11 +37,12 @@ public class UserControllerIntegrationTest {
         findUser = mock(FindUser.class);
         createUser = mock(CreateUser.class);
         userController = new UserController(findUser, createUser, listUsers, deleteUser, editUser);
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userController)
+                .setControllerAdvice(CustomExceptionHandler.class).build();
     }
 
     @Test
-    public void findUserByIdController() throws Exception {
+    public void shouldFindUserByIdController() throws Exception {
         User userMock = new User(1, 31, "William");
         when(findUser.execute(1)).thenReturn(userMock);
 
@@ -54,4 +57,17 @@ public class UserControllerIntegrationTest {
         verify(findUser, times(1)).execute(userMock.getId());
     }
 
+    @Test
+    public void shouldNotFoundUserByIdController() throws Exception {
+        User userMock = new User(1, 31, "William");
+        when(findUser.execute(1)).thenThrow(UserNotFoundException.class);
+
+        MvcResult mvcResult = mockMvc
+                .perform(get("/api/v1/users/1"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        verify(findUser, times(1)).execute(userMock.getId());
+    }
 }

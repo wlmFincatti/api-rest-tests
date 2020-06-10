@@ -12,7 +12,6 @@ import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
@@ -51,14 +50,11 @@ public class StepDefinitions extends AppContextConfig {
                 .statusCode(statusCode);
     }
 
-    @Then("^validate message \"(.*?)\"$")
+    @Then("^validate message error \"(.*?)\"$")
     public void validate_message(String messageExpected) throws Throwable {
-        String messageReturn = response
+        response
                 .then()
-                .extract()
-                .asString();
-
-        assertThat(messageReturn, is(messageExpected));
+                .body("error", is(messageExpected));
     }
 
     @Then("^validate the user name \"(.*?)\" and age (\\d+)$")

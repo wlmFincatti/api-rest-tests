@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody User user) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody User user) {
         UserDto userDto = UserConverter.convertDto(createUser.execute(user));
         URI uri = UriComponentsBuilder.fromPath("/api/v1/users/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(userDto);
@@ -55,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity editUser(@RequestBody User user) {
+    public ResponseEntity editUser(@Valid @RequestBody User user) {
         editUser.execute(user);
         return ResponseEntity.noContent().build();
     }
