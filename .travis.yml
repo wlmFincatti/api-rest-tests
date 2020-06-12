@@ -2,6 +2,8 @@ language: java
 addons:
   sonarcloud:
     organization: "williamsilva-github"
+    token:
+      secure: "asdijncuenuvwendq8248r74rss"
 jdk:
   - openjdk8
 script:
