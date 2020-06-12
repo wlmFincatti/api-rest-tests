@@ -1,13 +1,13 @@
 language: java
 addons:
   sonarcloud:
-    organization: "wlmFincatti-github"
+    organization: "williamsilva"
     token:
       secure: "67431b3e297d64d397319e9b72ee4977a3d70754"
 jdk:
   - openjdk8
 script:
-  - mvn sonar:sonar
+  - mvn clean verify sonar:sonar -Pcoverage
 notifications:
   email:
     recipients:
