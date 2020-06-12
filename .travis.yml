@@ -3,9 +3,7 @@ addons:
   sonarcloud:
     organization: "williamsilva"
     token:
-      secure: "67431b3e297d64d397319e9b72ee4977a3d70754"
-jdk:
-  - openjdk8
+      secure: "d8be767bdd6178e551557811251ab13b06472871"
 script:
   - mvn clean verify sonar:sonar -Pcoverage
 notifications:
