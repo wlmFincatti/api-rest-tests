@@ -3,9 +3,10 @@ addons:
   sonarcloud:
     organization: "williamsilva"
     token:
-      secure: "d8be767bdd6178e551557811251ab13b06472871"
+      secure: "$SONAR_TOKEN"
 script:
-  - mvn clean verify sonar:sonar
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 notifications:
   email:
     recipients:
