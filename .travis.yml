@@ -5,7 +5,9 @@ addons:
 jdk:
   - openjdk8
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  - mvn clean verify
+after_success:
+  - mvn sonar:sonar
 notifications:
   email:
     recipients:
