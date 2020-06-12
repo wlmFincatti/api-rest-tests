@@ -76,7 +76,7 @@ class UserControllerTest {
         List<User> listUserMock = Arrays.asList(userMock, userMock);
         when(listUsers.execute()).thenReturn(listUserMock);
 
-        ResponseEntity<List<UserDto>> listResponseEntity = userController.listUsers();
+        ResponseEntity<List<UserDto>> listResponseEntity = userController.listAllUsers();
 
         verify(listUsers, times(1)).execute();
         assertThat(listResponseEntity.getStatusCode(), is(HttpStatus.OK));
@@ -88,7 +88,7 @@ class UserControllerTest {
     void createUserController() {
         when(createUser.execute(userMock)).thenReturn(userMock);
 
-        ResponseEntity<UserDto> responseEntityResult = userController.createUser(userMock);
+        ResponseEntity<UserDto> responseEntityResult = userController.saveUser(userMock);
 
         verify(createUser, times(1)).execute(userMock);
         assertThat(responseEntityResult.getStatusCode(), is(HttpStatus.CREATED));
@@ -101,7 +101,7 @@ class UserControllerTest {
     @Test
     @DisplayName("should call method execute of deleteUser once time")
     void deleteUser() {
-        ResponseEntity response = userController.deleteUser(userMock.getId());
+        ResponseEntity response = userController.removeUser(userMock.getId());
 
         verify(deleteUser, times(1)).execute(userMock.getId());
         assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
@@ -111,7 +111,7 @@ class UserControllerTest {
     @Test
     @DisplayName("should call method execute of editUser once time")
     void editUser() {
-        ResponseEntity response = userController.editUser(userMock);
+        ResponseEntity response = userController.updateUser(userMock);
 
         verify(editUser, times(1)).execute(userMock);
         assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private FindUser findUser;
-    public CreateUser createUser;
+    private CreateUser createUser;
     private ListUsers listUsers;
     private DeleteUser deleteUser;
     private EditUser editUser;
@@ -53,13 +53,13 @@ public class UserController {
 
     @ApiOperation(value = "List all users")
     @GetMapping
-    public ResponseEntity<List<UserDto>> listUsers() {
+    public ResponseEntity<List<UserDto>> listAllUsers() {
         return ResponseEntity.ok(this.convertToDtos(listUsers.execute()));
     }
 
     @ApiOperation(value = "Create new user")
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<UserDto> saveUser(@Valid @RequestBody User user) {
         User userCreated = createUser.execute(user);
         URI uri = UriComponentsBuilder.fromPath("/api/v1/users/{id}").buildAndExpand(userCreated.getId()).toUri();
         return ResponseEntity.created(uri).body(this.convertToDto(userCreated));
@@ -67,14 +67,14 @@ public class UserController {
 
     @ApiOperation(value = "If user exists delete")
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(@PathVariable("id") Integer idUser) {
+    public ResponseEntity removeUser(@PathVariable("id") Integer idUser) {
         deleteUser.execute(idUser);
         return ResponseEntity.noContent().build();
     }
 
     @ApiOperation(value = "Update user")
     @PutMapping
-    public ResponseEntity editUser(@Valid @RequestBody User user) {
+    public ResponseEntity updateUser(@Valid @RequestBody User user) {
         editUser.execute(user);
         return ResponseEntity.noContent().build();
     }

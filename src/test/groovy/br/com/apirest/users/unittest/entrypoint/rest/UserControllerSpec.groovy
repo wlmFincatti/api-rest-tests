@@ -61,7 +61,7 @@ class UserControllerSpec extends Specification {
 
     def "should call method execute of deleteUser once time"() {
         when:
-        ResponseEntity<User> response = userController.deleteUser(userMock.getId())
+        ResponseEntity<User> response = userController.removeUser(userMock.getId())
 
         then:
         1 * deleteUser.execute(_)
@@ -70,7 +70,7 @@ class UserControllerSpec extends Specification {
 
     def "should call method execute of editUser once time"() {
         when:
-        ResponseEntity<User> response = userController.editUser(userMock)
+        ResponseEntity<User> response = userController.updateUser(userMock)
 
         then:
         1 * editUser.execute(_) >> {
@@ -87,7 +87,7 @@ class UserControllerSpec extends Specification {
         List<User> listUsersMock = Arrays.asList(userMock, userMock);
 
         when:
-        ResponseEntity<List<User>> response = userController.listUsers()
+        ResponseEntity<List<User>> response = userController.listAllUsers()
 
         then:
         1 * listUsers.execute() >> listUsersMock
@@ -106,7 +106,7 @@ class UserControllerSpec extends Specification {
 
     def "should call method execute of createUser once time and retun a user"() {
         when:
-        ResponseEntity<User> responseUser = userController.createUser(userMock)
+        ResponseEntity<User> responseUser = userController.saveUser(userMock)
 
         then:
         1 * createUser.execute(_) >> userMock
