@@ -80,7 +80,7 @@ class UserControllerTest {
 
         verify(listUsers, times(1)).execute();
         assertThat(listResponseEntity.getStatusCode(), is(HttpStatus.OK));
-        assertEquals(listResponseEntity.getBody().size(), 2);
+        assertEquals(2, listResponseEntity.getBody().size());
     }
 
     @Test

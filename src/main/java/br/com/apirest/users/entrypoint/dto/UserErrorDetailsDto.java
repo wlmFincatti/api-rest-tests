@@ -1,7 +1,6 @@
 package br.com.apirest.users.entrypoint.dto;
 
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
