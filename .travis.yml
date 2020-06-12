@@ -1,7 +1,7 @@
 language: java
 addons:
   sonarcloud:
-    organization: "williamsilva"
+    organization: "williamsilva-github"
     token:
       secure: "$SONAR_TOKEN"
 jdk:
