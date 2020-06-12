@@ -1,5 +1,15 @@
 language: java
-script: mvn clean verify
+sudo: false
+install: true
+addons:
+  sonarcloud:
+    organization: "williamsilva"
+    token:
+      secure: "$SONAR_TOKEN"
+jdk:
+  - oraclejdk8
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 notifications:
   email:
     recipients:
