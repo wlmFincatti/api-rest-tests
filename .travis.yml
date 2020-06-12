@@ -5,7 +5,7 @@ addons:
     token:
       secure: "d8be767bdd6178e551557811251ab13b06472871"
 script:
-  - mvn clean verify sonar:sonar
+  - mvn clean verify
 notifications:
   email:
     recipients:
