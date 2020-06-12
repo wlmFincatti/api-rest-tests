@@ -3,12 +3,10 @@ addons:
   sonarcloud:
     organization: "williamsilva-github"
     token:
-      secure: "asdijncuenuvwendq8248r74rss"
+      secure: "67431b3e297d64d397319e9b72ee4977a3d70754"
 jdk:
   - openjdk8
 script:
-  - mvn clean verify
-after_success:
   - mvn sonar:sonar
 notifications:
   email:
