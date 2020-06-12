@@ -26,6 +26,7 @@
         <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
         <javax.validation.version>2.0.0.Final</javax.validation.version>
+        <model.mapper.version>2.3.8</model.mapper.version>
     </properties>
 
     <dependencies>
@@ -126,6 +127,11 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator-annotation-processor</artifactId>
             <version>${hibernate.validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${model.mapper.version}</version>
         </dependency>
     </dependencies>
 

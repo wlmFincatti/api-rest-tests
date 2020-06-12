@@ -1,6 +1,7 @@
 package br.com.apirest.users.entrypoint.dto;
 
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
@@ -8,7 +9,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class UserErrorDetails {
+public class UserErrorDetailsDto {
 
     private String error;
     private String path;

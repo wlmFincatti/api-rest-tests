@@ -1,9 +1,10 @@
 package br.com.apirest.users.unittest.entrypoint.rest
 
 import br.com.apirest.users.domain.entity.User
-
+import br.com.apirest.users.entrypoint.dto.UserDto
 import br.com.apirest.users.entrypoint.rest.UserController
 import br.com.apirest.users.usecase.*
+import org.modelmapper.ModelMapper
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import spock.lang.Narrative
@@ -18,16 +19,19 @@ class UserControllerSpec extends Specification {
     ListUsers listUsers
     FindUser findUser
     UserController userController
-    User userMock;
+    User userMock
+    ModelMapper modelMapper
 
     def setup() {
+        modelMapper = Mock()
         editUser = Mock()
         createUser = Mock()
         deleteUser = Mock()
         listUsers = Mock()
         findUser = Mock()
-        userController = new UserController(findUser, createUser, listUsers, deleteUser, editUser)
+        userController = new UserController(findUser, createUser, listUsers, deleteUser, editUser, modelMapper)
         userMock = new User(1, 31, "William")
+        modelMapper.map(_, _) >> new UserDto(1, "William", 31)
     }
 
     def cleanup() {
@@ -38,6 +42,7 @@ class UserControllerSpec extends Specification {
         findUser = null
         userController = null
         userMock = null
+        modelMapper = null
     }
 
     def "should call method execute of findUser once time and return user"() {
