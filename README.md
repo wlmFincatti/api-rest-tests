@@ -1,7 +1,6 @@
 Api rest tests
 ======================
 [![Build Status](https://travis-ci.org/wlmFincatti/api-rest-tests.svg?branch=master)](https://travis-ci.org/wlmFincatti/api-rest-tests)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=wlmFincatti_api-rest-tests&metric=alert_status)](https://sonarcloud.io/dashboard?id=wlmFincatti_api-rest-tests)
 
 Estrutura de projeto JAVA abrangendo implementação do clean architecture e pirâmide de testes.
 
