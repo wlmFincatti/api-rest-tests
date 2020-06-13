@@ -2,6 +2,7 @@ package br.com.apirest.users.entrypoint.rest;
 
 import br.com.apirest.users.domain.entity.User;
 import br.com.apirest.users.entrypoint.dto.UserDto;
+import br.com.apirest.users.entrypoint.dto.UserToEntity;
 import br.com.apirest.users.usecase.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
@@ -59,8 +60,8 @@ public class UserController {
 
     @ApiOperation(value = "Create new user")
     @PostMapping
-    public ResponseEntity<UserDto> saveUser(@Valid @RequestBody User user) {
-        User userCreated = createUser.execute(user);
+    public ResponseEntity<UserDto> saveUser(@Valid @RequestBody UserToEntity user) {
+        User userCreated = createUser.execute(this.convertToEntity(user));
         URI uri = UriComponentsBuilder.fromPath("/api/v1/users/{id}").buildAndExpand(userCreated.getId()).toUri();
         return ResponseEntity.created(uri).body(this.convertToDto(userCreated));
     }
@@ -73,14 +74,18 @@ public class UserController {
     }
 
     @ApiOperation(value = "Update user")
-    @PutMapping
-    public ResponseEntity updateUser(@Valid @RequestBody User user) {
-        editUser.execute(user);
+    @PutMapping("/{id}")
+    public ResponseEntity updateUser(@PathVariable Integer id, @Valid @RequestBody UserToEntity user) {
+        editUser.execute(id, this.convertToEntity(user));
         return ResponseEntity.noContent().build();
     }
 
     private UserDto convertToDto(User user) {
         return modelMapper.map(user, UserDto.class);
+    }
+
+    private User convertToEntity(UserToEntity userToEntity) {
+        return modelMapper.map(userToEntity, User.class);
     }
 
     private List<UserDto> convertToDtos(List<User> users) {

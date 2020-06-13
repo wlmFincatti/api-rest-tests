@@ -2,6 +2,7 @@ package br.com.apirest.users.unittest.entrypoint.rest;
 
 import br.com.apirest.users.domain.entity.User;
 import br.com.apirest.users.entrypoint.dto.UserDto;
+import br.com.apirest.users.entrypoint.dto.UserToEntity;
 import br.com.apirest.users.entrypoint.rest.UserController;
 import br.com.apirest.users.usecase.*;
 import org.junit.jupiter.api.AfterEach;
@@ -30,6 +31,8 @@ class UserControllerTest {
     private EditUser editUser;
     private UserController userController;
     private User userMock;
+    private UserToEntity userToEntity;
+    private UserDto userDto;
     private ModelMapper modelMapper;
 
     @BeforeEach
@@ -42,7 +45,8 @@ class UserControllerTest {
         editUser = mock(EditUser.class);
         userController = new UserController(findUser, createUser, listUsers, deleteUser, editUser, modelMapper);
         userMock = new User(1, 31, "William");
-        when(modelMapper.map(any(), any())).thenReturn(new UserDto(1, "William", 31));
+        userDto = new UserDto(1, "William", 31);
+        userToEntity = new UserToEntity("William", 31);
     }
 
     @AfterEach
@@ -59,6 +63,7 @@ class UserControllerTest {
     @Test
     @DisplayName("should call method execute of findUser once time and return user")
     void findUserById() {
+        when(modelMapper.map(any(), any())).thenReturn(new UserDto(1, "William", 31));
         when(findUser.execute(Mockito.anyInt())).thenReturn(userMock);
 
         ResponseEntity<UserDto> responseEntityResult = userController.findUserById(1);
@@ -74,6 +79,7 @@ class UserControllerTest {
     @DisplayName("should call method execute of deleteUser once time")
     void listUsers() {
         List<User> listUserMock = Arrays.asList(userMock, userMock);
+        when(modelMapper.map(any(), any())).thenReturn(new UserDto(1, "William", 31));
         when(listUsers.execute()).thenReturn(listUserMock);
 
         ResponseEntity<List<UserDto>> listResponseEntity = userController.listAllUsers();
@@ -86,9 +92,10 @@ class UserControllerTest {
     @Test
     @DisplayName("should call method execute of createUser once time and retun a user")
     void createUserController() {
+        when(modelMapper.map(any(), any())).thenReturn(userMock).thenReturn(userDto);
         when(createUser.execute(userMock)).thenReturn(userMock);
 
-        ResponseEntity<UserDto> responseEntityResult = userController.saveUser(userMock);
+        ResponseEntity<UserDto> responseEntityResult = userController.saveUser(userToEntity);
 
         verify(createUser, times(1)).execute(userMock);
         assertThat(responseEntityResult.getStatusCode(), is(HttpStatus.CREATED));
@@ -111,9 +118,12 @@ class UserControllerTest {
     @Test
     @DisplayName("should call method execute of editUser once time")
     void editUser() {
-        ResponseEntity response = userController.updateUser(userMock);
+        Integer id = 1;
+        when(modelMapper.map(any(), any())).thenReturn(userMock);
 
-        verify(editUser, times(1)).execute(userMock);
+        ResponseEntity response = userController.updateUser(id, userToEntity);
+
+        verify(editUser, times(1)).execute(id, userMock);
         assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
         assertFalse(response.hasBody());
     }

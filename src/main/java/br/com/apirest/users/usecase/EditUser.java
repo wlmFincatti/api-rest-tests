@@ -16,11 +16,11 @@ public class EditUser {
         this.userRepository = userRepository;
     }
 
-    public void execute(User user) {
+    public void execute(Integer id, User user) {
 
-        if (!userRepository.existsById(user.getId())) {
+        if (!userRepository.existsById(id)) {
             throw new UserNotFoundException("User not found to update with id " + user.getId().toString());
         }
-        userRepository.editUser(user.getId(), user.getName(), user.getAge());
+        userRepository.editUser(id, user.getName(), user.getAge());
     }
 }

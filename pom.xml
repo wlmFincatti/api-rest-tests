@@ -181,7 +181,7 @@
                                         <exclude>**.*domain.**</exclude>
                                         <exclude>**.*config.**</exclude>
                                         <exclude>**.*Application</exclude>
-                                        <exclude>**.*Dto.**</exclude>
+                                        <exclude>**.*dto.**</exclude>
                                     </excludes>
                                     <limits>
                                         <limit>

@@ -15,21 +15,23 @@ public class EditUserTest {
 
     private UserRepository userRepository;
     private EditUser editUser;
+    private User userMock;
 
     @BeforeEach
     public void setup() {
         userRepository = mock(UserRepository.class);
         editUser = new EditUser(userRepository);
+        userMock = new User(1, 31, "William");
     }
 
     @Test
     public void shouldUserRepositoryEditOnceTimeAndUpdateUser() {
-        User userMock = new User(1, 31, "William");
+        Integer id = 1;
         when(userRepository.existsById(userMock.getId())).thenReturn(true);
 
-        editUser.execute(userMock);
+        editUser.execute(id, userMock);
 
-        verify(userRepository, times(1)).existsById(userMock.getId());
+        verify(userRepository, times(1)).existsById(id);
         verify(userRepository, times(1)).editUser(
                 userMock.getId(),
                 userMock.getName(),
@@ -39,10 +41,10 @@ public class EditUserTest {
 
     @Test
     public void shouldNotUserRepositoryEditOnceTimeAndThrowException() {
-        User userMock = new User(1, 31, "William");
-        UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () -> editUser.execute(userMock));
+        Integer id = 1;
+        UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () -> editUser.execute(id, userMock));
 
-        assertEquals("User not found to update with id "+userMock.getId(), userNotFoundException.getMessage());
+        assertEquals("User not found to update with id " + userMock.getId(), userNotFoundException.getMessage());
         verify(userRepository, times(1)).existsById(userMock.getId());
         verify(userRepository, times(0)).editUser(
                 userMock.getId(),
