@@ -27,7 +27,7 @@
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
         <javax.validation.version>2.0.0.Final</javax.validation.version>
         <model.mapper.version>2.3.8</model.mapper.version>
-        <sonar.coverage.exclusions>**.*Applicatio, **.*domain.**, **.*config.**, *.*dto.**</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**/config/**,**/domain/**,**/entrypoint/dto/**,**/*Application*</sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
