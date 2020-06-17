@@ -15,7 +15,7 @@ Estrutura de projeto JAVA abrangendo implementação do clean architecture e pir
 
 O projeto tem como objetivo demonstrar testes unitários com dois frameworks diferentes para testes unitários, no caso Spock baseado em Groovy e o Junit, também foi abordado teste de componente ou aceitação usando o Cucumber e rest Assured para validação de Apis.
 
-A pirâmide de testes implementada nesse projeto têm como referência o documento [Microservice Testing](https://martinfowler.com/articles/microservice-testing/) com algumas adaptações. Basicamente a implementação têm o seguinte princípio:
+A pirâmide de testes implementada neste projeto têm como referência o documento [Microservice Testing](https://martinfowler.com/articles/microservice-testing/) com algumas adaptações. Basicamente a implementação têm o seguinte princípio:
 
 >**Unitário**: Testa isoladamente as classes, o objetivo desse teste é validar se a regra da classe está funcionando corretamente sem precisar subir qualquer contexto de framework ou integrações.
 
