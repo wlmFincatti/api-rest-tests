@@ -18,7 +18,7 @@
         <java.version>1.8</java.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
         <cucumber.version>4.2.0</cucumber.version>
-        <swagger.version>2.9.2</swagger.version>
+        <swagger.version>2.10.0</swagger.version>
         <json.schema.validator.version>3.0.0</json.schema.validator.version>
         <spock.version>1.3-groovy-2.4</spock.version>
         <codehaus.groovy.version>2.4.7</codehaus.groovy.version>
